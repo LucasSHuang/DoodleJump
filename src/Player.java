@@ -33,4 +33,16 @@ public class Player implements KeyListener {
     public void keyPressed(KeyEvent e) {
         //
     }
+
+    public boolean touchingPlatform() {
+        return false;
+    }
+    public void move() {
+
+    }
+    public void jump() {
+
+    }
+
+
 }
