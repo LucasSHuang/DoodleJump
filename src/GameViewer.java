@@ -38,6 +38,8 @@ public class GameViewer extends JFrame {
     }
 
     public void myPaint(Graphics g) {
+        g.setColor(Color.WHITE);
+        g.fillRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
         for (Platform p : game.getPlatforms()) {
             p.draw(g);
         }

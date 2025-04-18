@@ -66,7 +66,15 @@ public class Game implements java.awt.event.KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        //
+        switch(e.getKeyCode()) {
+            case KeyEvent.VK_LEFT:
+                player.move(-1);
+                break;
+            case KeyEvent.VK_RIGHT:
+                player.move(1);
+                break;
+        }
+        window.repaint();
     }
 
     public static void main(String[] args) {

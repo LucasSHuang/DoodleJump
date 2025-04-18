@@ -6,7 +6,8 @@ import java.awt.event.KeyListener;
 public class Player {
 
     // Constants and Instance Variables
-    private final int START_X = 300;
+    private final int PLAYER_SIZE = 75;
+    private final int START_X = 262;
     private final int START_Y = 600;
     private GameViewer window;
     private Image right;
@@ -18,8 +19,8 @@ public class Player {
 
     public Player(GameViewer window) {
         this.window = window;
-        this.right = new ImageIcon("Resources/right.jpg").getImage();
-        this.left = new ImageIcon("Resources/left.jpg").getImage();
+        this.right = new ImageIcon("Resources/right.png").getImage();
+        this.left = new ImageIcon("Resources/left.png").getImage();
         this.x = START_X;
         this.y = START_Y;
         this.dx = 0;
@@ -30,7 +31,15 @@ public class Player {
         return false;
     }
 
-    public void move() {
+    public void move(int direction) {
+        if (direction == 1) {
+            dx = 1;
+            x += 10;
+        }
+        else if (direction == -1) {
+            dx = -1;
+            x -= 10;
+        }
         y += dy;
         dy += 1;
     }
@@ -40,11 +49,10 @@ public class Player {
 
     public void draw(Graphics g) {
         if (dx >= 0) {
-            g.drawImage(right, x, y, 75, 75, window);
+            g.drawImage(right, x, y, PLAYER_SIZE, PLAYER_SIZE, window);
         }
         else {
-            g.drawImage(left, x, y, 75, 75, window);
+            g.drawImage(left, x, y, PLAYER_SIZE, PLAYER_SIZE, window);
         }
-
     }
 }
