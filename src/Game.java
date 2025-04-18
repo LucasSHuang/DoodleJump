@@ -30,7 +30,13 @@ public class Game {
 
     }
 
-    public static void main(String[] args) {
+    public void playGame() {
 
+    }
+
+
+    public static void main(String[] args) {
+        Game doodleJump = new Game();
+        doodleJump.playGame();
     }
 }
