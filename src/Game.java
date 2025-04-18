@@ -50,6 +50,10 @@ public class Game implements java.awt.event.KeyListener {
     public void playGame() {
         generatePlatforms();
         window.repaint();
+        while (!gameOver) {
+            player.move();
+            window.repaint();
+        }
     }
 
     @Override
@@ -68,10 +72,10 @@ public class Game implements java.awt.event.KeyListener {
     public void keyPressed(KeyEvent e) {
         switch(e.getKeyCode()) {
             case KeyEvent.VK_LEFT:
-                player.move(-1);
+                player.setDx(-1);
                 break;
             case KeyEvent.VK_RIGHT:
-                player.move(1);
+                player.setDx(1);
                 break;
         }
         window.repaint();

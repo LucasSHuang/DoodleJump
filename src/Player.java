@@ -27,21 +27,21 @@ public class Player {
         this.dy = 0;
     }
 
+    public void setDx(int dx) {
+        this.dx = dx;
+    }
+
     public boolean touchingPlatform() {
         return false;
     }
 
-    public void move(int direction) {
-        if (direction == 1) {
-            dx = 1;
-            x += 10;
+    public void move() {
+        if (dx == 1) {
+            x += 1;
         }
-        else if (direction == -1) {
-            dx = -1;
-            x -= 10;
+        else if (dx == -1) {
+            x -= 1;
         }
-        y += dy;
-        dy += 1;
     }
     public void jump() {
 
