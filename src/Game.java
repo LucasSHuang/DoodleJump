@@ -1,8 +1,9 @@
 // Doodle Jump by Lucas Huang
 
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
-public class Game {
+public class Game implements java.awt.event.KeyListener {
 
     // Instance Variables
     private GameViewer window;
@@ -14,9 +15,11 @@ public class Game {
 
     public Game() {
         state = 0;
-        window = new GameViewer(this);
-        gameOver = false;
         platforms = new ArrayList<Platform>();
+        window = new GameViewer(this);
+        player = new Player(window);
+        gameOver = false;
+        window.addKeyListener(this);
     }
 
     public int getState() {
@@ -29,6 +32,10 @@ public class Game {
 
     public ArrayList<Platform> getPlatforms() {
         return platforms;
+    }
+
+    public Player getPlayer() {
+        return player;
     }
 
     public void generatePlatforms() {
@@ -45,6 +52,22 @@ public class Game {
         window.repaint();
     }
 
+    @Override
+    public void keyTyped(KeyEvent e) {
+        // Nothing required for this program.
+        // However, as a KeyListener, this class must supply this method
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        // Nothing required for this program.
+        // However, as a KeyListener, this class must supply this method
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        //
+    }
 
     public static void main(String[] args) {
         Game doodleJump = new Game();

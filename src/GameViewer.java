@@ -38,8 +38,9 @@ public class GameViewer extends JFrame {
     }
 
     public void myPaint(Graphics g) {
-        for (Platform p: game.getPlatforms()) {
+        for (Platform p : game.getPlatforms()) {
             p.draw(g);
         }
+        game.getPlayer().draw(g);
     }
 }
