@@ -16,6 +16,7 @@ public class Game {
         state = 0;
         window = new GameViewer(this);
         gameOver = false;
+        platforms = new ArrayList<Platform>();
     }
 
     public int getState() {
@@ -26,12 +27,22 @@ public class Game {
         return score;
     }
 
-    public void generatePlatform() {
+    public ArrayList<Platform> getPlatforms() {
+        return platforms;
+    }
 
+    public void generatePlatforms() {
+        int count = 10;
+        for (int i = 0; i < count; i++) {
+            int x = (int)(Math.random() * 500);
+            int y = 1000 - i * 100;
+            platforms.add(new Platform(x, y, window));
+        }
     }
 
     public void playGame() {
-
+        generatePlatforms();
+        window.repaint();
     }
 
 

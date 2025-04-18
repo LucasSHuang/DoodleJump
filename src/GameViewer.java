@@ -17,6 +17,7 @@ public class GameViewer extends JFrame {
         this.setTitle("Doodle Jump");
         this.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         this.setVisible(true);
+        this.createBufferStrategy(2);
     }
 
     // Buffer
@@ -37,6 +38,8 @@ public class GameViewer extends JFrame {
     }
 
     public void myPaint(Graphics g) {
-
+        for (Platform p: game.getPlatforms()) {
+            p.draw(g);
+        }
     }
 }
