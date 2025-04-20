@@ -61,7 +61,12 @@ public class Player {
             y= 0;
         }
         y += dy;
-        dy += 0.3;
+        if (dy >= 0) {
+            dy = 3;
+        }
+        else {
+            dy += 2;
+        }
         for (Platform p : platforms) {
             if (touchingPlatform(p)) {
                 jump();
@@ -69,7 +74,7 @@ public class Player {
         }
     }
     public void jump() {
-        dy = -10;
+        dy = -30;
     }
 
     public void draw(Graphics g) {
