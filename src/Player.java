@@ -8,6 +8,8 @@ public class Player {
     // Constants and Instance Variables
     private final int WINDOW_WIDTH = 600;
     private final int WINDOW_HEIGHT = 1000;
+    private final int PLATFORM_WIDTH = 100;
+    private final int PLATFORM_HEIGHT = 20;
     private final int PLAYER_SIZE = 75;
     private final int START_X = 262;
     private final int START_Y = 600;
@@ -37,8 +39,10 @@ public class Player {
         this.dx = dx;
     }
 
-    public boolean touchingPlatform() {
-        return false;
+    public boolean touchingPlatform(Platform p) {
+        int px = p.getX();
+        int py = p.getY();
+        return dy > 0 && x + PLAYER_SIZE >= px && x <= px + PLATFORM_WIDTH && y + PLAYER_SIZE >= py;
     }
 
     public void move() {
@@ -49,9 +53,19 @@ public class Player {
         else if (x < 0) {
             x = WINDOW_WIDTH - PLAYER_SIZE;
         }
+        if (y == WINDOW_HEIGHT) {
+            y= 0;
+        }
+        if (dy < 0) {
+            y += dy;
+            dy += 1;
+        }
+        else {
+            y += 1;
+        }
     }
     public void jump() {
-
+        dy = -20;
     }
 
     public void draw(Graphics g) {
