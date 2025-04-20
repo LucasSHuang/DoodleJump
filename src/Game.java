@@ -69,8 +69,15 @@ public class Game implements KeyListener, ActionListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
-        // Nothing required for this program.
-        // However, as a KeyListener, this class must supply this method
+        switch(e.getKeyCode()) {
+            case KeyEvent.VK_LEFT:
+                player.setDx(0);
+                break;
+            case KeyEvent.VK_RIGHT:
+                player.setDx(0);
+                break;
+        }
+
     }
 
     @Override
