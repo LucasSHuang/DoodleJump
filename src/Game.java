@@ -69,15 +69,7 @@ public class Game implements KeyListener, ActionListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
-        switch(e.getKeyCode()) {
-            case KeyEvent.VK_LEFT:
-                player.setDx(0);
-                break;
-            case KeyEvent.VK_RIGHT:
-                player.setDx(0);
-                break;
-        }
-
+        player.setDx(0);
     }
 
     @Override
@@ -95,7 +87,7 @@ public class Game implements KeyListener, ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        player.move();
+        player.move(platforms);
         window.repaint();
     }
 
