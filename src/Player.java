@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 
 public class Player {
 
@@ -12,14 +13,14 @@ public class Player {
     private final int PLATFORM_HEIGHT = 20;
     private final int PLAYER_SIZE = 75;
     private final int START_X = 262;
-    private final int START_Y = 600;
+    private final int START_Y = 100;
     private GameViewer window;
     private Image right;
     private Image left;
     private int x;
     private int y;
     private int dx;
-    private int dy;
+    private double dy;
 
     public Player(GameViewer window) {
         this.window = window;
@@ -42,10 +43,13 @@ public class Player {
     public boolean touchingPlatform(Platform p) {
         int px = p.getX();
         int py = p.getY();
-        return dy > 0 && x + PLAYER_SIZE >= px && x <= px + PLATFORM_WIDTH && y + PLAYER_SIZE >= py;
+        boolean rightX = x + PLAYER_SIZE >= px && x <= px + PLATFORM_WIDTH;
+        boolean rightY = y + PLAYER_SIZE >= py && y <= py + PLATFORM_HEIGHT;
+        boolean falling = dy > 0;
+        return rightX && rightY && falling;
     }
 
-    public void move() {
+    public void move(ArrayList<Platform> platforms) {
         x += dx;
         if (x > WINDOW_WIDTH - PLAYER_SIZE) {
             x = 0;
@@ -56,16 +60,16 @@ public class Player {
         if (y == WINDOW_HEIGHT) {
             y= 0;
         }
-        if (dy < 0) {
-            y += dy;
-            dy += 1;
-        }
-        else {
-            y += 1;
+        y += dy;
+        dy += 0.3;
+        for (Platform p : platforms) {
+            if (touchingPlatform(p)) {
+                jump();
+            }
         }
     }
     public void jump() {
-        dy = -20;
+        dy = -10;
     }
 
     public void draw(Graphics g) {
