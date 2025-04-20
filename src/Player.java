@@ -27,6 +27,10 @@ public class Player {
         this.dy = 0;
     }
 
+    public int getDx() {
+        return dx;
+    }
+
     public void setDx(int dx) {
         this.dx = dx;
     }
@@ -35,12 +39,14 @@ public class Player {
         return false;
     }
 
-    public void move() {
-        if (dx == 1) {
-            x += 1;
+    public void move(int direction) {
+        if (direction == 1) {
+            x += 4;
+            dx = 1;
         }
-        else if (dx == -1) {
-            x -= 1;
+        else if (direction == -1) {
+            x -= 4;
+            dx = -1;
         }
     }
     public void jump() {

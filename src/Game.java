@@ -1,17 +1,23 @@
 // Doodle Jump by Lucas Huang
 
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
-public class Game implements java.awt.event.KeyListener {
+public class Game implements KeyListener, ActionListener {
 
     // Instance Variables
+    private final int DELAY_IN_MILLISECONDS = 5;
     private GameViewer window;
     private ArrayList<Platform> platforms;
     private Player player;
     private int score;
     private int state;
     private boolean gameOver;
+    private Timer clock;
 
     public Game() {
         state = 0;
@@ -20,6 +26,8 @@ public class Game implements java.awt.event.KeyListener {
         player = new Player(window);
         gameOver = false;
         window.addKeyListener(this);
+        clock = new Timer(DELAY_IN_MILLISECONDS, this);
+        clock.start();
     }
 
     public int getState() {
@@ -50,10 +58,6 @@ public class Game implements java.awt.event.KeyListener {
     public void playGame() {
         generatePlatforms();
         window.repaint();
-        while (!gameOver) {
-            player.move();
-            window.repaint();
-        }
     }
 
     @Override
@@ -72,11 +76,22 @@ public class Game implements java.awt.event.KeyListener {
     public void keyPressed(KeyEvent e) {
         switch(e.getKeyCode()) {
             case KeyEvent.VK_LEFT:
-                player.setDx(-1);
+                player.move(-1);
                 break;
             case KeyEvent.VK_RIGHT:
-                player.setDx(1);
+                player.move(1);
                 break;
+        }
+        window.repaint();
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (player.getDx() == 1) {
+            player.move(1);
+        }
+        else if (player.getDx() == -1) {
+            player.move(-1);
         }
         window.repaint();
     }
