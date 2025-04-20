@@ -11,6 +11,7 @@ public class Game implements KeyListener, ActionListener {
 
     // Instance Variables
     private final int DELAY_IN_MILLISECONDS = 5;
+    private final int PLAYER_SPEED = 3;
     private GameViewer window;
     private ArrayList<Platform> platforms;
     private Player player;
@@ -76,10 +77,10 @@ public class Game implements KeyListener, ActionListener {
     public void keyPressed(KeyEvent e) {
         switch(e.getKeyCode()) {
             case KeyEvent.VK_LEFT:
-                player.move(-1);
+                player.setDx(-PLAYER_SPEED);
                 break;
             case KeyEvent.VK_RIGHT:
-                player.move(1);
+                player.setDx(PLAYER_SPEED);
                 break;
         }
         window.repaint();
@@ -87,12 +88,7 @@ public class Game implements KeyListener, ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (player.getDx() == 1) {
-            player.move(1);
-        }
-        else if (player.getDx() == -1) {
-            player.move(-1);
-        }
+        player.move();
         window.repaint();
     }
 

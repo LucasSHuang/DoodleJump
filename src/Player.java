@@ -6,6 +6,8 @@ import java.awt.event.KeyListener;
 public class Player {
 
     // Constants and Instance Variables
+    private final int WINDOW_WIDTH = 600;
+    private final int WINDOW_HEIGHT = 1000;
     private final int PLAYER_SIZE = 75;
     private final int START_X = 262;
     private final int START_Y = 600;
@@ -39,14 +41,13 @@ public class Player {
         return false;
     }
 
-    public void move(int direction) {
-        if (direction == 1) {
-            x += 4;
-            dx = 1;
+    public void move() {
+        x += dx;
+        if (x > WINDOW_WIDTH - PLAYER_SIZE) {
+            x = 0;
         }
-        else if (direction == -1) {
-            x -= 4;
-            dx = -1;
+        else if (x < 0) {
+            x = WINDOW_WIDTH - PLAYER_SIZE;
         }
     }
     public void jump() {
