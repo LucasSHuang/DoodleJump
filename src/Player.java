@@ -61,11 +61,9 @@ public class Player {
             y= 0;
         }
         y += dy;
-        if (dy >= 0) {
-            dy = 3;
-        }
-        else {
-            dy += 2;
+        dy += 1.5;
+        if (dy > 3.5) {
+            dy = 3.5;
         }
         for (Platform p : platforms) {
             if (touchingPlatform(p)) {
