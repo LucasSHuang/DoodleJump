@@ -10,8 +10,9 @@ import java.util.ArrayList;
 public class Game implements KeyListener, ActionListener {
 
     // Instance Variables
-    private final int DELAY_IN_MILLISECONDS = 5;
-    private final int PLAYER_SPEED = 3;
+    private final int DELAY_IN_MILLISECONDS = 7;
+    private final int PLAYER_SPEED = 4;
+    private final int SCROLL_CAP = 400;
     private GameViewer window;
     private ArrayList<Platform> platforms;
     private Player player;
@@ -88,6 +89,14 @@ public class Game implements KeyListener, ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         player.move(platforms);
+        int py = player.getY();
+        if (py < SCROLL_CAP) {
+            int changeY = SCROLL_CAP - py;
+            player.setY(SCROLL_CAP);
+            for (Platform p: platforms) {
+                p.setY(p.getY() + changeY);
+            }
+        }
         window.repaint();
     }
 

@@ -11,7 +11,7 @@ public class Player {
     private final int WINDOW_HEIGHT = 1000;
     private final int PLATFORM_WIDTH = 100;
     private final int PLATFORM_HEIGHT = 20;
-    private final int PLAYER_SIZE = 75;
+    private final int PLAYER_SIZE = 65;
     private final int START_X = 262;
     private final int START_Y = 100;
     private GameViewer window;
@@ -40,6 +40,14 @@ public class Player {
         this.dx = dx;
     }
 
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
     public boolean touchingPlatform(Platform p) {
         int px = p.getX();
         int py = p.getY();
@@ -57,13 +65,10 @@ public class Player {
         else if (x < 0) {
             x = WINDOW_WIDTH - PLAYER_SIZE;
         }
-        if (y == WINDOW_HEIGHT) {
-            y= 0;
-        }
         y += dy;
         dy += 1.5;
-        if (dy > 3.5) {
-            dy = 3.5;
+        if (dy > 4) {
+            dy = 4;
         }
         for (Platform p : platforms) {
             if (touchingPlatform(p)) {
