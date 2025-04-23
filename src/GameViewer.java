@@ -5,9 +5,8 @@ import java.awt.image.BufferStrategy;
 public class GameViewer extends JFrame {
 
     // Constants and Instance Variables
-    private final int WINDOW_WIDTH = 600;
-    private final int WINDOW_HEIGHT = 1000;
-    private final int TITLE_BAR_HEIGHT = 23;
+    public static final int WINDOW_WIDTH = 600;
+    public static final int WINDOW_HEIGHT = 1000;
     private Game game;
 
     // Constructor

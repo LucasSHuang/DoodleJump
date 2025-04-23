@@ -4,8 +4,8 @@ import java.awt.*;
 public class Platform {
 
     // Constants and Instance Variables
-    private final int PLATFORM_WIDTH = 100;
-    private final int PLATFORM_HEIGHT = 20;
+    public static final int PLATFORM_WIDTH = 100;
+    public static final int PLATFORM_HEIGHT = 20;
     private GameViewer window;
     private Image platform;
     private int x;

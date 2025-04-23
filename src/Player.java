@@ -7,10 +7,6 @@ import java.util.ArrayList;
 public class Player {
 
     // Constants and Instance Variables
-    private final int WINDOW_WIDTH = 600;
-    private final int WINDOW_HEIGHT = 1000;
-    private final int PLATFORM_WIDTH = 100;
-    private final int PLATFORM_HEIGHT = 20;
     private final int PLAYER_SIZE = 65;
     private final int START_X = 262;
     private final int START_Y = 100;
@@ -51,19 +47,19 @@ public class Player {
     public boolean touchingPlatform(Platform p) {
         int px = p.getX();
         int py = p.getY();
-        boolean rightX = x + PLAYER_SIZE >= px && x <= px + PLATFORM_WIDTH;
-        boolean rightY = y + PLAYER_SIZE >= py && y <= py + PLATFORM_HEIGHT;
+        boolean rightX = x + PLAYER_SIZE >= px && x <= px + Platform.PLATFORM_WIDTH;
+        boolean rightY = y + PLAYER_SIZE >= py && y <= py + Platform.PLATFORM_HEIGHT;
         boolean falling = dy > 0;
         return rightX && rightY && falling;
     }
 
     public void move(ArrayList<Platform> platforms) {
         x += dx;
-        if (x > WINDOW_WIDTH - PLAYER_SIZE) {
+        if (x > GameViewer.WINDOW_WIDTH - PLAYER_SIZE) {
             x = 0;
         }
         else if (x < 0) {
-            x = WINDOW_WIDTH - PLAYER_SIZE;
+            x = GameViewer.WINDOW_WIDTH - PLAYER_SIZE;
         }
         y += dy;
         dy += 1.5;

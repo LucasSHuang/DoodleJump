@@ -93,8 +93,11 @@ public class Game implements KeyListener, ActionListener {
         if (py < SCROLL_CAP) {
             int changeY = SCROLL_CAP - py;
             player.setY(SCROLL_CAP);
-            for (Platform p: platforms) {
-                p.setY(p.getY() + changeY);
+            for (int i = 0; i < platforms.size(); i++) {
+                if (platforms.get(i).getY() >= GameViewer.WINDOW_HEIGHT) {
+                    platforms.remove(i);
+                }
+                platforms.get(i).setY(platforms.get(i).getY() + changeY);
             }
         }
         window.repaint();
