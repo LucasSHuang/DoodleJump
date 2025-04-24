@@ -13,7 +13,7 @@ public class Game implements KeyListener, ActionListener {
     private final int DELAY_IN_MILLISECONDS = 7;
     private final int PLAYER_SPEED = 4;
     private final int SCROLL_CAP = 400;
-    private final int NUM_PLATFORMS = 15;
+    private final int NUM_PLATFORMS = 13;
     private GameViewer window;
     private ArrayList<Platform> platforms;
     private Player player;
@@ -66,19 +66,6 @@ public class Game implements KeyListener, ActionListener {
             }
     }
 
-
-    public void replacePlatform() {
-        int minY = GameViewer.WINDOW_HEIGHT;
-        for (int i = 0; i < platforms.size(); i++) {
-            if (platforms.get(i).getY() < minY) {
-                minY = platforms.get(i).getY();
-            }
-        }
-        int x = generateX();
-        int y = minY - ((int) (Math.random() * 50) + 50);
-        platforms.add(new Platform(x, y, window));
-    }
-
     public void playGame() {
         generatePlatforms();
         window.repaint();
@@ -119,14 +106,14 @@ public class Game implements KeyListener, ActionListener {
             int minY = platforms.get(platforms.size() - 1).getY();
             for (int i = 0; i < platforms.size(); i++) {
                 platforms.get(i).setY(platforms.get(i).getY() + changeY);
-                if (platforms.get(i).getY() >= GameViewer.WINDOW_HEIGHT - 75) {
+                if (platforms.get(i).getY() < minY) {
+                    minY = platforms.get(i).getY();
+                }
+                if (platforms.get(i).getY() >= GameViewer.WINDOW_HEIGHT - GameViewer.TITLE_BAR_HEIGHT) {
                     platforms.get(i).setX(generateX());
                     platforms.get(i).setY(generateY(minY));
                 }
             }
-//            while (platforms.size() < NUM_PLATFORMS) {
-//                replacePlatform();
-//            }
         }
         window.repaint();
     }
