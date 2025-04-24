@@ -8,11 +8,13 @@ public class GameViewer extends JFrame {
     public static final int WINDOW_WIDTH = 600;
     public static final int WINDOW_HEIGHT = 1000;
     public static final int TITLE_BAR_HEIGHT = 23;
+    private Image background;
     private Game game;
 
     // Constructor
     public GameViewer(Game game) {
         this.game = game;
+        this.background = new ImageIcon("Resources/background.png").getImage();
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setTitle("Doodle Jump");
         this.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -38,8 +40,7 @@ public class GameViewer extends JFrame {
     }
 
     public void myPaint(Graphics g) {
-        g.setColor(Color.WHITE);
-        g.fillRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+        g.drawImage(background, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, this);
         for (Platform p : game.getPlatforms()) {
             p.draw(g);
         }

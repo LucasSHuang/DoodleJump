@@ -13,7 +13,7 @@ public class Game implements KeyListener, ActionListener {
     private final int DELAY_IN_MILLISECONDS = 7;
     private final int PLAYER_SPEED = 4;
     private final int SCROLL_CAP = 400;
-    private final int NUM_PLATFORMS = 10;
+    private final int NUM_PLATFORMS = 15;
     private GameViewer window;
     private ArrayList<Platform> platforms;
     private Player player;
@@ -54,13 +54,18 @@ public class Game implements KeyListener, ActionListener {
         return (int) (Math.random() * 500);
     }
 
+    public int generateY(int minY) {
+        return minY - ((int) (Math.random() * 50) + 50);
+    }
+
     public void generatePlatforms() {
             for (int i = 0; i < NUM_PLATFORMS; i++) {
                 int x = generateX();
-                int y = GameViewer.WINDOW_HEIGHT - i * (GameViewer.WINDOW_HEIGHT / NUM_PLATFORMS);
+                int y = generateY(GameViewer.WINDOW_HEIGHT - i * (GameViewer.WINDOW_HEIGHT / NUM_PLATFORMS));
                 platforms.add(new Platform(x, y, window));
             }
     }
+
 
     public void replacePlatform() {
         int minY = GameViewer.WINDOW_HEIGHT;
@@ -111,16 +116,17 @@ public class Game implements KeyListener, ActionListener {
             int changeY = SCROLL_CAP - py;
             score += changeY;
             player.setY(SCROLL_CAP);
+            int minY = platforms.get(platforms.size() - 1).getY();
             for (int i = 0; i < platforms.size(); i++) {
                 platforms.get(i).setY(platforms.get(i).getY() + changeY);
-                if (platforms.get(i).getY() >= GameViewer.WINDOW_HEIGHT) {
-                    platforms.remove(i);
-                    i--;
+                if (platforms.get(i).getY() >= GameViewer.WINDOW_HEIGHT - 75) {
+                    platforms.get(i).setX(generateX());
+                    platforms.get(i).setY(generateY(minY));
                 }
             }
-            while (platforms.size() < NUM_PLATFORMS) {
-                replacePlatform();
-            }
+//            while (platforms.size() < NUM_PLATFORMS) {
+//                replacePlatform();
+//            }
         }
         window.repaint();
     }
