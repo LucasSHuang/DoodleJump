@@ -54,6 +54,16 @@ public class Game implements KeyListener, ActionListener {
         return (int) (Math.random() * 500);
     }
 
+    public int getMinY() {
+        int minY = GameViewer.WINDOW_HEIGHT;
+        for (int i = 0; i < platforms.size(); i++) {
+            if (platforms.get(i).getY() < minY) {
+                minY = platforms.get(i).getY();
+            }
+        }
+        return minY;
+    }
+
     public int generateY(int minY) {
         return minY - ((int) (Math.random() * 50) + 50);
     }
@@ -103,13 +113,10 @@ public class Game implements KeyListener, ActionListener {
             int changeY = SCROLL_CAP - py;
             score += changeY;
             player.setY(SCROLL_CAP);
-            int minY = platforms.get(platforms.size() - 1).getY();
+            int minY = getMinY();
             for (int i = 0; i < platforms.size(); i++) {
                 platforms.get(i).setY(platforms.get(i).getY() + changeY);
-                if (platforms.get(i).getY() < minY) {
-                    minY = platforms.get(i).getY();
-                }
-                if (platforms.get(i).getY() >= GameViewer.WINDOW_HEIGHT - GameViewer.TITLE_BAR_HEIGHT) {
+                if (platforms.get(i).getY() >= GameViewer.WINDOW_HEIGHT) {
                     platforms.get(i).setX(generateX());
                     platforms.get(i).setY(generateY(minY));
                 }
