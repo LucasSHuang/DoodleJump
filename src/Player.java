@@ -28,10 +28,6 @@ public class Player {
         this.dy = 0;
     }
 
-    public int getDx() {
-        return dx;
-    }
-
     public void setDx(int dx) {
         this.dx = dx;
     }
@@ -44,6 +40,24 @@ public class Player {
         this.y = y;
     }
 
+    public void setX() {
+        x += dx;
+        if (x > GameViewer.WINDOW_WIDTH - PLAYER_SIZE) {
+            x = 0;
+        }
+        else if (x < 0) {
+            x = GameViewer.WINDOW_WIDTH - PLAYER_SIZE;
+        }
+    }
+
+    public void fall() {
+        y += dy;
+        dy += 1.5;
+        if (dy > 4) {
+            dy = 4;
+        }
+    }
+
     public boolean touchingPlatform(Platform p) {
         int px = p.getX();
         int py = p.getY();
@@ -54,18 +68,8 @@ public class Player {
     }
 
     public void move(ArrayList<Platform> platforms) {
-        x += dx;
-        if (x > GameViewer.WINDOW_WIDTH - PLAYER_SIZE) {
-            x = 0;
-        }
-        else if (x < 0) {
-            x = GameViewer.WINDOW_WIDTH - PLAYER_SIZE;
-        }
-        y += dy;
-        dy += 1.5;
-        if (dy > 4) {
-            dy = 4;
-        }
+        setX();
+        fall();
         for (Platform p : platforms) {
             if (touchingPlatform(p)) {
                 jump();
