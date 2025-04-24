@@ -13,6 +13,7 @@ public class Game implements KeyListener, ActionListener {
     private final int DELAY_IN_MILLISECONDS = 7;
     private final int PLAYER_SPEED = 4;
     private final int SCROLL_CAP = 400;
+    private final int NUM_PLATFORMS = 10;
     private GameViewer window;
     private ArrayList<Platform> platforms;
     private Player player;
@@ -23,6 +24,7 @@ public class Game implements KeyListener, ActionListener {
 
     public Game() {
         state = 0;
+        score = 0;
         platforms = new ArrayList<Platform>();
         window = new GameViewer(this);
         player = new Player(window);
@@ -48,13 +50,28 @@ public class Game implements KeyListener, ActionListener {
         return player;
     }
 
+    public int generateX() {
+        return (int) (Math.random() * 500);
+    }
+
     public void generatePlatforms() {
-        int count = 10;
-        for (int i = 0; i < count; i++) {
-            int x = (int)(Math.random() * 500);
-            int y = 1000 - i * 100;
-            platforms.add(new Platform(x, y, window));
+            for (int i = 0; i < NUM_PLATFORMS; i++) {
+                int x = generateX();
+                int y = GameViewer.WINDOW_HEIGHT - i * (GameViewer.WINDOW_HEIGHT / NUM_PLATFORMS);
+                platforms.add(new Platform(x, y, window));
+            }
+    }
+
+    public void replacePlatform() {
+        int minY = GameViewer.WINDOW_HEIGHT;
+        for (int i = 0; i < platforms.size(); i++) {
+            if (platforms.get(i).getY() < minY) {
+                minY = platforms.get(i).getY();
+            }
         }
+        int x = generateX();
+        int y = minY - ((int) (Math.random() * 50) + 50);
+        platforms.add(new Platform(x, y, window));
     }
 
     public void playGame() {
@@ -75,7 +92,7 @@ public class Game implements KeyListener, ActionListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        switch(e.getKeyCode()) {
+        switch (e.getKeyCode()) {
             case KeyEvent.VK_LEFT:
                 player.setDx(-PLAYER_SPEED);
                 break;
@@ -92,12 +109,17 @@ public class Game implements KeyListener, ActionListener {
         int py = player.getY();
         if (py < SCROLL_CAP) {
             int changeY = SCROLL_CAP - py;
+            score += changeY;
             player.setY(SCROLL_CAP);
             for (int i = 0; i < platforms.size(); i++) {
+                platforms.get(i).setY(platforms.get(i).getY() + changeY);
                 if (platforms.get(i).getY() >= GameViewer.WINDOW_HEIGHT) {
                     platforms.remove(i);
+                    i--;
                 }
-                platforms.get(i).setY(platforms.get(i).getY() + changeY);
+            }
+            while (platforms.size() < NUM_PLATFORMS) {
+                replacePlatform();
             }
         }
         window.repaint();

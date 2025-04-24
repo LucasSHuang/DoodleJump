@@ -7,6 +7,7 @@ public class GameViewer extends JFrame {
     // Constants and Instance Variables
     public static final int WINDOW_WIDTH = 600;
     public static final int WINDOW_HEIGHT = 1000;
+    public static final int TITLE_BAR_HEIGHT = 23;
     private Game game;
 
     // Constructor
