@@ -10,6 +10,7 @@ public class Player {
     private final int PLAYER_SIZE = 65;
     private final int START_X = 262;
     private final int START_Y = 100;
+    private final double GRAVITY = 1.5;
     private GameViewer window;
     private Image right;
     private Image left;
@@ -52,7 +53,7 @@ public class Player {
 
     public void fall() {
         y += dy;
-        dy += 1.5;
+        dy += GRAVITY;
         if (dy > 4) {
             dy = 4;
         }
