@@ -8,6 +8,9 @@ public class GameViewer extends JFrame {
     public static final int WINDOW_WIDTH = 600;
     public static final int WINDOW_HEIGHT = 1000;
     public static final int TITLE_BAR_HEIGHT = 23;
+    private final int SCORE_WIDTH = 20;
+    private final int SCORE_HEIGHT = 50;
+    private final Font MAIN = new Font("PLAIN", Font.BOLD, 24);
     private Image background;
     private Game game;
 
@@ -20,6 +23,12 @@ public class GameViewer extends JFrame {
         this.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         this.setVisible(true);
         this.createBufferStrategy(2);
+    }
+
+    public void printScore(Graphics g) {
+        g.setFont(MAIN);
+        String score = "Score: " + Integer.toString(game.getScore());
+        g.drawString(score, SCORE_WIDTH, SCORE_HEIGHT + TITLE_BAR_HEIGHT);
     }
 
     // Buffer
@@ -40,7 +49,9 @@ public class GameViewer extends JFrame {
     }
 
     public void myPaint(Graphics g) {
+        g.setColor(Color.BLACK);
         g.drawImage(background, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, this);
+        printScore(g);
         for (Platform p : game.getPlatforms()) {
             p.draw(g);
         }
