@@ -51,10 +51,10 @@ public class GameViewer extends JFrame {
     public void myPaint(Graphics g) {
         g.setColor(Color.BLACK);
         g.drawImage(background, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, this);
-        printScore(g);
         for (Platform p : game.getPlatforms()) {
             p.draw(g);
         }
         game.getPlayer().draw(g);
+        printScore(g);
     }
 }

@@ -116,6 +116,8 @@ public class Game implements KeyListener, ActionListener {
             int minY = getMinY();
             for (int i = 0; i < platforms.size(); i++) {
                 platforms.get(i).setY(platforms.get(i).getY() + changeY);
+            }
+            for (int i = 0; i < platforms.size(); i++) {
                 if (platforms.get(i).getY() >= GameViewer.WINDOW_HEIGHT) {
                     platforms.get(i).setX(generateX());
                     platforms.get(i).setY(generateY(minY));
