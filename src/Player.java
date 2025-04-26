@@ -9,6 +9,7 @@ public class Player {
     private final int START_X = 262;
     private final int START_Y = 100;
     private final double GRAVITY = 1.5;
+    private final double GRAVITY_LIMIT = 4;
     private GameViewer window;
     private Image right;
     private Image left;
@@ -52,8 +53,8 @@ public class Player {
     public void fall() {
         y += dy;
         dy += GRAVITY;
-        if (dy > 4) {
-            dy = 4;
+        if (dy > GRAVITY_LIMIT) {
+            dy = GRAVITY_LIMIT;
         }
     }
 
@@ -62,7 +63,7 @@ public class Player {
         int py = p.getY();
         boolean rightX = x + PLAYER_SIZE >= px && x <= px + Platform.PLATFORM_WIDTH;
         boolean rightY = y + PLAYER_SIZE >= py && y <= py + Platform.PLATFORM_HEIGHT;
-        boolean falling = dy > 0;
+        boolean falling = dy == GRAVITY_LIMIT;
         return rightX && rightY && falling;
     }
 

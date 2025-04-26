@@ -107,8 +107,18 @@ public class Game implements KeyListener, ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (gameOver) {
+            clock.stop();
+            return;
+        }
         player.move(platforms);
         int py = player.getY();
+        if (py > GameViewer.WINDOW_HEIGHT) {
+            gameOver = true;
+            state++;
+            window.repaint();
+            return;
+        }
         if (py < SCROLL_CAP) {
             int changeY = SCROLL_CAP - py;
             score += changeY;
