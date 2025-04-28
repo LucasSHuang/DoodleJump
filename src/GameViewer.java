@@ -64,6 +64,7 @@ public class GameViewer extends JFrame {
             for (Platform p : game.getPlatforms()) {
                 p.draw(g);
             }
+            game.getMonster().draw(g);
             game.getPlayer().draw(g);
             g.setFont(MAIN);
             printScore(g, SCORE_WIDTH, SCORE_HEIGHT + TITLE_BAR_HEIGHT);

@@ -1,6 +1,11 @@
+import javax.swing.*;
+import java.awt.*;
+
 public class Monster {
-    private final int MONSTER_SIZE = 85;
+    private final int MONSTER_HEIGHT = 75;
+    private final int MONSTER_WIDTH = 100;
     private GameViewer window;
+    private Image image;
     private int x;
     private int y;
 
@@ -8,6 +13,7 @@ public class Monster {
         this.x = x;
         this.y = y;
         this.window = window;
+        this.image = new ImageIcon("Resources/monster.png").getImage();
     }
 
     public int getX() {
@@ -24,5 +30,9 @@ public class Monster {
 
     public void setY(int y) {
         this.y = y;
+    }
+
+    public void draw(Graphics g) {
+        g.drawImage(image, x, y, MONSTER_WIDTH, MONSTER_HEIGHT, window);
     }
 }

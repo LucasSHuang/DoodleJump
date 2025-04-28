@@ -18,6 +18,7 @@ public class Game implements KeyListener, ActionListener {
     private ArrayList<Platform> platforms;
     private Player player;
     private Monster monster;
+    private boolean touchingMonster;
     private int score;
     private int state;
     private Timer clock;
@@ -27,8 +28,9 @@ public class Game implements KeyListener, ActionListener {
         score = 0;
         platforms = new ArrayList<Platform>();
         window = new GameViewer(this);
-        monster = new Monster(generateX(), 4000, window);
+        monster = new Monster(generateX(), 500, window);
         player = new Player(window);
+        touchingMonster = false;
         window.addKeyListener(this);
         clock = new Timer(DELAY_IN_MILLISECONDS, this);
         clock.start();
@@ -48,6 +50,10 @@ public class Game implements KeyListener, ActionListener {
 
     public Player getPlayer() {
         return player;
+    }
+
+    public Monster getMonster() {
+        return monster;
     }
 
     public int generateX() {
@@ -80,7 +86,7 @@ public class Game implements KeyListener, ActionListener {
         if (state == 1) {
             clock.stop();
         }
-        else if (py > GameViewer.WINDOW_HEIGHT) {
+        else if (py > GameViewer.WINDOW_HEIGHT || touchingMonster) {
             state++;
             window.repaint();
         }
