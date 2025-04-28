@@ -17,6 +17,7 @@ public class Game implements KeyListener, ActionListener {
     private GameViewer window;
     private ArrayList<Platform> platforms;
     private Player player;
+    private Monster monster;
     private int score;
     private int state;
     private Timer clock;
@@ -26,6 +27,7 @@ public class Game implements KeyListener, ActionListener {
         score = 0;
         platforms = new ArrayList<Platform>();
         window = new GameViewer(this);
+        monster = new Monster(generateX(), 4000, window);
         player = new Player(window);
         window.addKeyListener(this);
         clock = new Timer(DELAY_IN_MILLISECONDS, this);
@@ -74,6 +76,32 @@ public class Game implements KeyListener, ActionListener {
             }
     }
 
+    public void gameOver(int py) {
+        if (state == 1) {
+            clock.stop();
+        }
+        else if (py > GameViewer.WINDOW_HEIGHT) {
+            state++;
+            window.repaint();
+        }
+    }
+
+    public void changeY(int py) {
+        if (py < SCROLL_CAP) {
+            int changeY = SCROLL_CAP - py;
+            score += changeY;
+            player.setY(SCROLL_CAP);
+            int minY = getMinY();
+            for (Platform p: platforms) {
+                p.setY(p.getY() + changeY);
+                if (p.getY() >= GameViewer.WINDOW_HEIGHT) {
+                    p.setX(generateX());
+                    p.setY(generateY(minY));
+                }
+            }
+        }
+    }
+
     public void playGame() {
         generatePlatforms();
         window.repaint();
@@ -105,32 +133,10 @@ public class Game implements KeyListener, ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (state == 1) {
-            clock.stop();
-            return;
-        }
         player.move(platforms);
         int py = player.getY();
-        if (py > GameViewer.WINDOW_HEIGHT) {
-            state++;
-            window.repaint();
-            return;
-        }
-        if (py < SCROLL_CAP) {
-            int changeY = SCROLL_CAP - py;
-            score += changeY;
-            player.setY(SCROLL_CAP);
-            int minY = getMinY();
-            for (int i = 0; i < platforms.size(); i++) {
-                platforms.get(i).setY(platforms.get(i).getY() + changeY);
-            }
-            for (int i = 0; i < platforms.size(); i++) {
-                if (platforms.get(i).getY() >= GameViewer.WINDOW_HEIGHT) {
-                    platforms.get(i).setX(generateX());
-                    platforms.get(i).setY(generateY(minY));
-                }
-            }
-        }
+        gameOver(py);
+        changeY(py);
         window.repaint();
     }
 
