@@ -19,7 +19,6 @@ public class Game implements KeyListener, ActionListener {
     private Player player;
     private int score;
     private int state;
-    private boolean gameOver;
     private Timer clock;
 
     public Game() {
@@ -28,7 +27,6 @@ public class Game implements KeyListener, ActionListener {
         platforms = new ArrayList<Platform>();
         window = new GameViewer(this);
         player = new Player(window);
-        gameOver = false;
         window.addKeyListener(this);
         clock = new Timer(DELAY_IN_MILLISECONDS, this);
         clock.start();
@@ -107,14 +105,13 @@ public class Game implements KeyListener, ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (gameOver) {
+        if (state == 1) {
             clock.stop();
             return;
         }
         player.move(platforms);
         int py = player.getY();
         if (py > GameViewer.WINDOW_HEIGHT) {
-            gameOver = true;
             state++;
             window.repaint();
             return;
