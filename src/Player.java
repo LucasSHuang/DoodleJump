@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Player {
 
     // Constants and Instance Variables
-    private final int PLAYER_SIZE = 65;
+    public static final int PLAYER_SIZE = 65;
     private final int START_X = 262;
     private final int START_Y = 100;
     private final double GRAVITY = 1.5;
@@ -26,6 +26,10 @@ public class Player {
         this.y = START_Y;
         this.dx = 0;
         this.dy = 0;
+    }
+
+    public int getX() {
+        return x;
     }
 
     public void setDx(int dx) {

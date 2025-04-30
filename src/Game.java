@@ -20,7 +20,6 @@ public class Game implements KeyListener, ActionListener {
     private ArrayList<Platform> platforms;
     private Player player;
     private Monster monster;
-    private boolean touchingMonster;
     private int score;
     private int state;
     private Timer clock;
@@ -32,7 +31,6 @@ public class Game implements KeyListener, ActionListener {
         window = new GameViewer(this);
         monster = new Monster(generateX(), MONSTER_Y, window);
         player = new Player(window);
-        touchingMonster = false;
         window.addKeyListener(this);
         clock = new Timer(DELAY_IN_MILLISECONDS, this);
         clock.start();
@@ -84,11 +82,21 @@ public class Game implements KeyListener, ActionListener {
             }
     }
 
+    public boolean isTouchingMonster() {
+        int mx = monster.getX();
+        int my = monster.getY();
+        int px = player.getX();
+        int py = player.getY();
+        boolean rightX = px + Player.PLAYER_SIZE >= mx && px <= mx + Platform.PLATFORM_WIDTH;
+        boolean rightY = py + Player.PLAYER_SIZE >= my && py <= my + Platform.PLATFORM_HEIGHT;
+        return rightX && rightY;
+    }
+
     public void gameOver(int py) {
         if (state == 1) {
             clock.stop();
         }
-        else if (py > GameViewer.WINDOW_HEIGHT || touchingMonster) {
+        else if (py > GameViewer.WINDOW_HEIGHT || isTouchingMonster()) {
             state++;
             window.repaint();
         }
