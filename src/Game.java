@@ -14,6 +14,8 @@ public class Game implements KeyListener, ActionListener {
     private final int PLAYER_SPEED = 4;
     private final int SCROLL_CAP = 400;
     private final int NUM_PLATFORMS = 13;
+    private final int BUG_FACTOR = 150;
+    private final int MONSTER_Y = -3000;
     private GameViewer window;
     private ArrayList<Platform> platforms;
     private Player player;
@@ -28,7 +30,7 @@ public class Game implements KeyListener, ActionListener {
         score = 0;
         platforms = new ArrayList<Platform>();
         window = new GameViewer(this);
-        monster = new Monster(generateX(), 500, window);
+        monster = new Monster(generateX(), MONSTER_Y, window);
         player = new Player(window);
         touchingMonster = false;
         window.addKeyListener(this);
@@ -97,10 +99,15 @@ public class Game implements KeyListener, ActionListener {
             int changeY = SCROLL_CAP - py;
             score += changeY;
             player.setY(SCROLL_CAP);
+            monster.setY(monster.getY() + changeY);
+            if (monster.getY() >= GameViewer.WINDOW_HEIGHT - BUG_FACTOR) {
+                monster.setX(generateX());
+                monster.setY(MONSTER_Y);
+            }
             int minY = getMinY();
             for (Platform p: platforms) {
                 p.setY(p.getY() + changeY);
-                if (p.getY() >= GameViewer.WINDOW_HEIGHT) {
+                if (p.getY() >= GameViewer.WINDOW_HEIGHT - BUG_FACTOR) {
                     p.setX(generateX());
                     p.setY(generateY(minY));
                 }
