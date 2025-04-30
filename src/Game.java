@@ -99,18 +99,26 @@ public class Game implements KeyListener, ActionListener {
             int changeY = SCROLL_CAP - py;
             score += changeY;
             player.setY(SCROLL_CAP);
-            monster.setY(monster.getY() + changeY);
-            if (monster.getY() >= GameViewer.WINDOW_HEIGHT - BUG_FACTOR) {
-                monster.setX(generateX());
-                monster.setY(MONSTER_Y);
-            }
-            int minY = getMinY();
-            for (Platform p: platforms) {
-                p.setY(p.getY() + changeY);
-                if (p.getY() >= GameViewer.WINDOW_HEIGHT - BUG_FACTOR) {
-                    p.setX(generateX());
-                    p.setY(generateY(minY));
-                }
+            changeMonsterY(changeY);
+            changePlatformY(changeY);
+        }
+    }
+
+    public void changeMonsterY(int changeY) {
+        monster.setY(monster.getY() + changeY);
+        if (monster.getY() >= GameViewer.WINDOW_HEIGHT - BUG_FACTOR) {
+            monster.setX(generateX());
+            monster.setY(MONSTER_Y);
+        }
+    }
+
+    public void changePlatformY(int changeY) {
+        int minY = getMinY();
+        for (Platform p: platforms) {
+            p.setY(p.getY() + changeY);
+            if (p.getY() >= GameViewer.WINDOW_HEIGHT - BUG_FACTOR) {
+                p.setX(generateX());
+                p.setY(generateY(minY));
             }
         }
     }
