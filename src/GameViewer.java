@@ -28,11 +28,13 @@ public class GameViewer extends JFrame {
         this.createBufferStrategy(2);
     }
 
+    // Prints out the score in the top right corner
     public void printScore(Graphics g, int width, int height) {
         String score = "Score: " + Integer.toString(game.getScore());
         g.drawString(score, width, height);
     }
 
+    // Paints the game over message and the score below it
     public void paintEnd(Graphics g) {
             g.setFont(LARGE);
             printScore(g, TEXT_START, WINDOW_HEIGHT / 2);
@@ -40,7 +42,7 @@ public class GameViewer extends JFrame {
             g.drawString("Game Over", TEXT_START, WINDOW_HEIGHT / 3);
     }
 
-    // Buffer
+    // Buffer to make graphics more smooth
     public void paint(Graphics g) {
         BufferStrategy bf = this.getBufferStrategy();
         if (bf == null)
@@ -57,8 +59,11 @@ public class GameViewer extends JFrame {
         Toolkit.getDefaultToolkit().sync();
     }
 
+    // Paint method
     public void myPaint(Graphics g) {
+        // Draw background image
         g.drawImage(background, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, this);
+        // If player is alive print the player, monster, platforms, etc.
         if (game.getState() == 0) {
             g.setColor(Color.BLACK);
             for (Platform p : game.getPlatforms()) {
@@ -69,6 +74,7 @@ public class GameViewer extends JFrame {
             g.setFont(MAIN);
             printScore(g, SCORE_WIDTH, SCORE_HEIGHT + TITLE_BAR_HEIGHT);
         }
+        // If player is dead just do the end game method
         if (game.getState() == 1) {
             paintEnd(g);
         }
