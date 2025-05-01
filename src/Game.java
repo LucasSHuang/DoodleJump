@@ -9,13 +9,13 @@ import java.util.ArrayList;
 
 public class Game implements KeyListener, ActionListener {
 
-    // Instance Variables
+    // Instance Variables and Constants
     private final int DELAY_IN_MILLISECONDS = 7;
     private final int PLAYER_SPEED = 4;
     private final int SCROLL_CAP = 400;
     private final int NUM_PLATFORMS = 13;
     private final int BUG_FACTOR = 150;
-    private final int MONSTER_Y = -3000;
+    private final int MONSTER_Y = -4000;
     private GameViewer window;
     private ArrayList<Platform> platforms;
     private Player player;
@@ -24,20 +24,20 @@ public class Game implements KeyListener, ActionListener {
     private int state;
     private Timer clock;
 
+    // Constructor
     public Game() {
         state = 0;
         score = 0;
         platforms = new ArrayList<Platform>();
         window = new GameViewer(this);
+        // Gets platforms into the arraylist
+        generatePlatforms();
         monster = new Monster(generateX(), MONSTER_Y, window);
         player = new Player(window);
         window.addKeyListener(this);
-        clock = new Timer(DELAY_IN_MILLISECONDS, this);
-        clock.start();
     }
 
     // Getters
-
     public int getState() {
         return state;
     }
@@ -90,29 +90,36 @@ public class Game implements KeyListener, ActionListener {
             }
     }
 
+    // Checks to see if the player is touching the monster
     public boolean isTouchingMonster() {
         int mx = monster.getX();
         int my = monster.getY();
         int px = player.getX();
         int py = player.getY();
+        // Logic for if player is touching
         boolean rightX = px + Player.PLAYER_SIZE >= mx && px <= mx + Platform.PLATFORM_WIDTH;
         boolean rightY = py + Player.PLAYER_SIZE >= my && py <= my + Platform.PLATFORM_HEIGHT;
         return rightX && rightY;
     }
 
+    // Checks if game is over
     public void gameOver(int py) {
+        // If game over stop the action performed method
         if (state == 1) {
             clock.stop();
         }
+        // Check to see if player has fallen or touched the monster and if so game is over
         else if (py > GameViewer.WINDOW_HEIGHT || isTouchingMonster()) {
             state++;
-            window.repaint();
         }
     }
 
+    // Change the y-coordinates of player, platforms, and monster
     public void changeY(int py) {
+        // If player is too high will set him down and adjust all the platforms down
         if (py < SCROLL_CAP) {
             int changeY = SCROLL_CAP - py;
+            // Add difference between scroll cap and player height to the score
             score += changeY;
             player.setY(SCROLL_CAP);
             changeMonsterY(changeY);
@@ -120,18 +127,25 @@ public class Game implements KeyListener, ActionListener {
         }
     }
 
+    // Change the monster's y coordinates
     public void changeMonsterY(int changeY) {
+        // Changes the y value
         monster.setY(monster.getY() + changeY);
+        // If monster is below the screen set it back to its original height
         if (monster.getY() >= GameViewer.WINDOW_HEIGHT - BUG_FACTOR) {
             monster.setX(generateX());
             monster.setY(MONSTER_Y);
         }
     }
 
+    // Change platforms y coordinates
     public void changePlatformY(int changeY) {
+        // Gets the highest platforms y coordinates
         int minY = getMinY();
         for (Platform p: platforms) {
+            // Changes the platforms y
             p.setY(p.getY() + changeY);
+            // If platform is below the screen move it back up with random coordinates
             if (p.getY() >= GameViewer.WINDOW_HEIGHT - BUG_FACTOR) {
                 p.setX(generateX());
                 p.setY(generateY(minY));
@@ -139,9 +153,10 @@ public class Game implements KeyListener, ActionListener {
         }
     }
 
+    // Starts the clock for the actionperformed method
     public void playGame() {
-        generatePlatforms();
-        window.repaint();
+        clock = new Timer(DELAY_IN_MILLISECONDS, this);
+        clock.start();
     }
 
     @Override
@@ -151,6 +166,7 @@ public class Game implements KeyListener, ActionListener {
     }
 
     @Override
+    // Makes it so that when you release the button the player doesn't move
     public void keyReleased(KeyEvent e) {
         player.setDx(0);
     }
@@ -159,21 +175,27 @@ public class Game implements KeyListener, ActionListener {
     public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()) {
             case KeyEvent.VK_LEFT:
+                // Sets the dx so that the player moves left
                 player.setDx(-PLAYER_SPEED);
                 break;
             case KeyEvent.VK_RIGHT:
+                // Sets the dx so that the player moves right
                 player.setDx(PLAYER_SPEED);
                 break;
         }
-        window.repaint();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        // Player moves when you are holding one of the arrow keys
         player.move(platforms);
-        monster.move();
+        // Gets the player's y value
         int py = player.getY();
+        // Checks for game over
         gameOver(py);
+        // Monster moves
+        monster.move();
+        // Changes all the y values so that platforms and monster reset
         changeY(py);
         window.repaint();
     }
