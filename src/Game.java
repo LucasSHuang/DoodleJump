@@ -36,6 +36,8 @@ public class Game implements KeyListener, ActionListener {
         clock.start();
     }
 
+    // Getters
+
     public int getState() {
         return state;
     }
@@ -56,27 +58,33 @@ public class Game implements KeyListener, ActionListener {
         return monster;
     }
 
+    // Randomly generate an x coordinate on the screen
     public int generateX() {
         return (int) (Math.random() * 500);
     }
 
+    // Get the y coordinate of the highest platform
     public int getMinY() {
         int minY = GameViewer.WINDOW_HEIGHT;
-        for (int i = 0; i < platforms.size(); i++) {
-            if (platforms.get(i).getY() < minY) {
-                minY = platforms.get(i).getY();
+        for (Platform p: platforms) {
+            if (p.getY() < minY) {
+                minY = p.getY();
             }
         }
         return minY;
     }
 
+    // Generate a random y value at least 50 pixels away from the highest point
     public int generateY(int minY) {
         return minY - ((int) (Math.random() * 50) + 50);
     }
 
+    // Create platforms
     public void generatePlatforms() {
             for (int i = 0; i < NUM_PLATFORMS; i++) {
+                // Generate a random x value
                 int x = generateX();
+
                 int y = generateY(GameViewer.WINDOW_HEIGHT - i * (GameViewer.WINDOW_HEIGHT / NUM_PLATFORMS));
                 platforms.add(new Platform(x, y, window));
             }
@@ -163,6 +171,7 @@ public class Game implements KeyListener, ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         player.move(platforms);
+        monster.move();
         int py = player.getY();
         gameOver(py);
         changeY(py);
