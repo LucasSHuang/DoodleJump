@@ -11,6 +11,7 @@ public class Platform {
     private int x;
     private int y;
 
+    // Constructor
     public Platform(int x, int y, GameViewer window) {
         this.x = x;
         this.y = y;
@@ -18,6 +19,7 @@ public class Platform {
         this.platform = new ImageIcon("Resources/platform.jpg").getImage();
     }
 
+    // Getters and setters
     public int getX() {
         return x;
     }
@@ -34,6 +36,7 @@ public class Platform {
         this.y = y;
     }
 
+    // Draw method
     public void draw(Graphics g) {
         g.drawImage(platform, x, y, PLATFORM_WIDTH, PLATFORM_HEIGHT, window);
     }
