@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Monster {
+
+    // Constants and instance variables
     private final int MONSTER_HEIGHT = 75;
     private final int MONSTER_WIDTH = 100;
     private final int MONSTER_SPEED = 3;
@@ -11,6 +13,7 @@ public class Monster {
     private int y;
     private int dx;
 
+    // Constructor
     public Monster(int x, int y, GameViewer window) {
         this.x = x;
         this.y = y;
@@ -19,6 +22,7 @@ public class Monster {
         this.image = new ImageIcon("Resources/monster.png").getImage();
     }
 
+    // Getters and setters
     public int getX() {
         return x;
     }
@@ -35,16 +39,17 @@ public class Monster {
         this.y = y;
     }
 
+    // Makes the monster move
     public void move() {
+        // Changes x value by dx(speed of the monster)
         x += dx;
-        if (x > GameViewer.WINDOW_WIDTH - MONSTER_WIDTH) {
-            dx *= -1;
-        }
-        else if (x < 0) {
+        // Makes it so that if touching either edge of the screen changes direction
+        if (x > GameViewer.WINDOW_WIDTH - MONSTER_WIDTH || x < 0) {
             dx *= -1;
         }
     }
 
+    // Draw method
     public void draw(Graphics g) {
         g.drawImage(image, x, y, MONSTER_WIDTH, MONSTER_HEIGHT, window);
     }
