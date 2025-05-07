@@ -6,7 +6,7 @@ public class Monster {
     // Constants and instance variables
     private final int MONSTER_HEIGHT = 75;
     private final int MONSTER_WIDTH = 100;
-    private final int MONSTER_SPEED = 5;
+    private final int MONSTER_SPEED = 8;
     private GameViewer window;
     private Image image;
     private int x;
