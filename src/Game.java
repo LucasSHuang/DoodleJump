@@ -9,8 +9,8 @@ import java.util.ArrayList;
 public class Game implements KeyListener, ActionListener {
 
     // Instance Variables and Constants
-    private final int DELAY_IN_MILLISECONDS = 7;
-    private final int PLAYER_SPEED = 4;
+    private final int DELAY_IN_MILLISECONDS = 20;
+    private final int PLAYER_SPEED = 7;
     private final int SCROLL_CAP = 400;
     private final int NUM_PLATFORMS = 13;
     private final int BUG_FACTOR = 150;

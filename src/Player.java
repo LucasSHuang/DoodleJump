@@ -9,7 +9,7 @@ public class Player {
     private final int START_X = 262;
     private final int START_Y = 100;
     private final double GRAVITY = 1.5;
-    private final double GRAVITY_LIMIT = 4.5;
+    private final double GRAVITY_LIMIT = 7;
     private GameViewer window;
     private Image right;
     private Image left;
